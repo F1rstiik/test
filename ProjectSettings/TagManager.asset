@@ -7,6 +7,7 @@ TagManager:
   - Coin
   - Ladder
   - Spring
+  - Bush
   layers:
   - Default
   - TransparentFX

@@ -23,9 +23,10 @@ public class Player : MonoBehaviour
     public bool walkSound = false;
     public bool IsLadder = false;
     public int HP = 100;
-    public int MaxHeight = 7;
+    public int MaxHeight = 4;
     public float MaxY;
     public float LastY;
+    public float MaxHP = 100;
     // Start is called before the first frame update
     void Start()
     {
@@ -49,9 +50,15 @@ public class Player : MonoBehaviour
  
     if (MaxY-LastY>MaxHeight&&isgrounded)
         {
-            // HP-визуально не обновл€ютс€
-            HP -= ((int)(MaxY - LastY) - 7) * 15;
-            MaxY = 0;
+            int damage = ((int)(MaxY - LastY) - 7) * 7;
+            if (damage > 0)
+            {
+                HP -= damage;
+                MaxY = 0;
+                UI.ChangeHP();
+                CheckDeath();
+            }
+            
         }
     }
     
@@ -125,6 +132,13 @@ public class Player : MonoBehaviour
         if (collision.CompareTag("Ladder"))
         {
             IsLadder = false;
+        }
+    }
+    public void CheckDeath()
+    {
+        if (HP <= 0)
+        {
+            Destroy(gameObject);
         }
     }
 }
