@@ -126,6 +126,10 @@ public class Player : MonoBehaviour
         {
             rb.velocity = Vector2.up * 14;
         } 
+        if (other.CompareTag("Bush"))
+        {
+            MaxY = transform.position.y;
+        }
     }
     public void OnTriggerExit2D(Collider2D collision) // OnTriggerExit2D - eto kogda ti vihodish iz kakogoto triggera
     {
@@ -140,5 +144,9 @@ public class Player : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+    public void HideBush()
+    {
+
     }
 }
