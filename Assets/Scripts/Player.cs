@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -129,6 +130,7 @@ public class Player : MonoBehaviour
         if (other.CompareTag("Bush"))
         {
             MaxY = transform.position.y;
+            HideBush(true, other.gameObject.transform);
         }
     }
     public void OnTriggerExit2D(Collider2D collision) // OnTriggerExit2D - eto kogda ti vihodish iz kakogoto triggera
@@ -137,6 +139,10 @@ public class Player : MonoBehaviour
         {
             IsLadder = false;
         }
+        if (collision.CompareTag("Bush"))
+        {
+            HideBush(false, collision.gameObject.transform);
+        }    
     }
     public void CheckDeath()
     {
@@ -145,8 +151,21 @@ public class Player : MonoBehaviour
             Destroy(gameObject);
         }
     }
-    public void HideBush()
+    public void HideBush(bool Hide, Transform Bush)
     {
+        foreach (Transform b in Bush)
+        {
+            Color c = b.gameObject.GetComponent<SpriteRenderer>().color;
 
+            if (Hide)
+            {
+                c = new Color(c.r, c.g, c.b, 0.25f);
+            }
+            else
+            {
+                c = new Color(c.r, c.g, c.b, 1);
+            }
+            b.gameObject.GetComponent<SpriteRenderer>().color = c;
+        }
     }
 }
