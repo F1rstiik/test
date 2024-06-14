@@ -51,7 +51,7 @@ public class Player : MonoBehaviour
  
     if (MaxY-LastY>MaxHeight&&isgrounded)
         {
-            int damage = ((int)(MaxY - LastY) - 7) * 7;
+            int damage = ((int)(MaxY - Mathf.Abs(LastY)) - 7) * 7; // Mathf.Abs - tozhe samoe chislo, tolko bez znaka minus
             if (damage > 0)
             {
                 HP -= damage;
@@ -148,7 +148,7 @@ public class Player : MonoBehaviour
     {
         if (HP <= 0)
         {
-            Destroy(gameObject);
+            //Destroy(gameObject);
         }
     }
     public void HideBush(bool Hide, Transform Bush)
