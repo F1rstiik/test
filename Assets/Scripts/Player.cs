@@ -6,6 +6,7 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     public float speed = 7;
+    public float normal_speed = 7;
     public Rigidbody2D rb;
     public float moveInput;
     public float jumpForce = 5;
@@ -28,6 +29,7 @@ public class Player : MonoBehaviour
     public float MaxY;
     public float LastY;
     public float MaxHP = 100;
+    public float DamageDelay = 0.75f;
     // Start is called before the first frame update
     void Start()
     {
@@ -111,6 +113,10 @@ public class Player : MonoBehaviour
     }
     public void OnTriggerEnter2D(Collider2D other)
     {
+        if (other.CompareTag("Spikes"))
+        {
+            StartCoroutine(SpikeDamage());
+        }
         if (other.CompareTag("Coin"))
         {
             Coins++;
@@ -135,6 +141,11 @@ public class Player : MonoBehaviour
     }
     public void OnTriggerExit2D(Collider2D collision) // OnTriggerExit2D - eto kogda ti vihodish iz kakogoto triggera
     {
+        if (collision.CompareTag("Spikes"))
+        {
+            StopCoroutine(SpikeDamage());
+            speed = normal_speed;
+        }
         if (collision.CompareTag("Ladder"))
         {
             IsLadder = false;
@@ -166,6 +177,15 @@ public class Player : MonoBehaviour
                 c = new Color(c.r, c.g, c.b, 1);
             }
             b.gameObject.GetComponent<SpriteRenderer>().color = c;
+        }
+    }
+    public IEnumerator SpikeDamage()
+    {
+        speed = 2.75f;
+        while (true)
+        {
+            HP -= 15;
+            yield return new WaitForSeconds(DamageDelay);
         }
     }
 }

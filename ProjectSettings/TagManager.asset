@@ -8,6 +8,7 @@ TagManager:
   - Ladder
   - Spring
   - Bush
+  - Spikes
   layers:
   - Default
   - TransparentFX
